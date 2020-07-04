@@ -1,0 +1,63 @@
+<!--
+  Step 1: This is your descretion how you would like to display data,
+  but you must list all the documents in your resource collection.
+-->
+<%- include ('../partials/header') %>
+
+<div class="container my-5">
+  <header>
+    <h1>Connex'nShare Post</h1>
+  </header>
+  <hr>
+  <div class="content">
+    <% for (let connection of connections) { %>
+      <div class="card my-3">
+        <div class="card-header clearfix">
+          <div class=" float-left">
+            <h5 class="card-title"><%= connection.title %></h5>
+            <% if (typeof connection.user !== 'undefined') { %>
+              <small class="author">~ <%= connection.user.fullname %></small>
+            <% } %>
+            <br>
+            <small class="time"><%= connection.updatedAt %></small>
+          </div>
+          <div class="info-love-index">
+            <div class="post-info">
+              <small class="category"><%= connection.category %></small>
+              <small class="location"><%= connection.location %></small>
+            </div>
+            <p class="price-index"><strong>$<%= connection.price %></strong></p>
+            <div class="love-btn">
+              <label class="love-button"><i class="fa fa-heart"></i></label>
+            </div>
+          </div>
+ 
+        </div>
+
+        <div class="card-body">          
+          <p class="card-text">
+            <%= connection.synopsis %>
+          </p>
+          <a href="/connections/<%= connection.id %>">more...</a>
+        </div>
+
+        <% if (authorized && (typeof connection.user === 'undefined' || connection.user.email === email)) { %>
+          <div class="card-footer custom-footer">
+            <a href="/connections/<%= connection.id %>/edit">
+              <i class="fa fa-edit"></i>
+            </a>
+            <form class="form-inline" action="/connections/delete" method="post" onsubmit="return confirm('Are you sure you want to delete all your hard work?');">
+              <input type="hidden" value="<%= connection.id %>" name="id">
+              <button class="delete" type="submit">
+                <i class="fa fa-trash"></i>
+              </button>
+            </form>
+          </div>
+        <% } %>
+       
+      </div>
+    <% } %>
+  </div>
+</div>
+
+<%- include ('../partials/footer') %>

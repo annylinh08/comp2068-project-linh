@@ -1,0 +1,63 @@
+<!--
+  Step 1: This is your descretion how you would like to display data,
+  but you must list display only one document based on the passed ID.
+-->
+<%- include ('../partials/header') %>
+
+<div class="container my-5">
+  <header>
+    <h1>
+      <%= connection.title %>
+    </h1>
+    <br>
+    <div class="info-love">
+      <div class="info">
+        <small>
+          <%= (connection.updatedAt.toLocaleString("en-CA")) %>
+        </small>
+        <small class="category">
+          <%= (connection.category) %>
+        </small>
+        <small class="location">
+          <%= (connection.location) %>
+        </small>
+      </div>
+      <div class="love-btn-show">
+        <label class="love-button-show"><i class="fa fa-heart"></i></label>
+      </div>
+    </div>
+
+
+   
+    <div class="author-price">
+      <p><strong>By: <%= connection.user.fullname %></strong></p>
+      <p class="price"><strong>$<%= connection.price %></strong></p>
+    </div>
+    
+  </header>
+  <hr>
+  <div class="content">
+    <%- connection.description %>
+  </div>
+  <div class="edit-delete">
+    <% if (authorized && (typeof connection.user === 'undefined' || connection.user.email === email)) { %>
+      <a href="/connections/<%= connection.id %>/edit">
+        <i class="fa fa-edit edit-show"> Edit Here/ </i>
+      </a>
+      <form class="form-inline" action="/connections/delete" method="post" onsubmit="return confirm('Are you sure you want to delete your feed?');">
+        <input type="hidden" value="<%= connection.id %>" name="id">
+        <button class="delete delete-show" type="submit">
+          <i class="fa fa-trash"> Delete</i>
+        </button>
+      </form>
+      <% } %>
+  </div>
+  
+</div>
+
+<%- include ('../partials/footer') %>
+
+
+
+
+

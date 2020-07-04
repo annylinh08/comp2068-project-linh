@@ -1,0 +1,51 @@
+<!--
+  Step 1: The form must be sharable between the new and edit views.
+-->
+<form action="<%= (typeof actionPath === 'undefined') ? '/connections' : actionPath %>", method="POST">
+  <% if (typeof actionPath !== 'undefined') { %>
+    <input type="hidden" name="id" value="<%= formData.id %>">
+  <% } %>
+
+  <div class="form-group">
+    <label for="title">Title</label>
+    <input type="text" name="title" class="form-control" value="<%= formData.title %>">
+  </div>
+
+  <div class="form-group">
+    <label for="description">Description</label>
+    <textarea name="description" class="form-control summernote">
+      <%= formData.description %>
+    </textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="category">Category</label>
+    <select name="category" class="form-control">
+      <option>Select Category</option>
+      <% var categories=['Offer Services', 'Selling Homemade Food','Lost and Found','Tips Sharing'] %>
+      <% for (let category of categories) { %>
+        <option <%= (category === formData.category) && 'selected' %> value="<%= category %>"><%= category %></option>
+      <% } %>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="location">Location</label>
+    <select name="location" class="form-control">
+      <option>Select Location</option>
+      <% var locations=['Barrie', 'Innisfil', 'Midhurst', 'Edgar', 'Spring Water', 'Angus', 'Churchill', 'Wasaga Beach','Alliston', 'Borden', 'Orillia','Keswick','Cookstown','Elmvale', 'Sutton' ] %>
+      <% for (let location of locations) { %>
+        <option <%= (location === formData.location) && 'selected' %> value="<%= location %>"><%= location %></option>
+      <% } %>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="price">Price</label>
+    <input type="number" name="price" class="form-control" value="<%= formData.price %>">
+  </div>
+
+  <div class="form-group">
+    <button class="btn btn-dark">Submit</button>
+  </div>
+</form>
+
