@@ -26,13 +26,9 @@ exports.index = async (req, res) => {
       .populate('user')
       .sort({updatedAt: 'desc'});
 
-    res.render(`${viewPath}/index`, {
-      pageTitle: 'Connex Page',
-      connections: connections
-    });
+      res.status(200).json(connections);
   } catch (error) {
-    req.flash('danger', `There was an error displaying the Connex Page: ${error}`);
-    res.redirect('/');
+    res.status(400).json({message: 'There was an error fetching the posts', error});
   }
 };
 
@@ -40,14 +36,9 @@ exports.show = async (req, res) => {
   try {
     const connection = await Connection.findById(req.params.id)
       .populate('user');
-    console.log(connection);
-    res.render(`${viewPath}/show`, {
-      pageTitle: connection.title,
-      connection: connection
-    });
+      res.status(200).json(connection);
   } catch (error) {
-    req.flash('danger', `There was an error displaying this item: ${error}`);
-    res.redirect('/');
+      res.status(400).json({message: "There was an error fetching the post"});
   }
 };
 
@@ -59,18 +50,12 @@ exports.new = (req, res) => {
 
 exports.create = async (req, res) => {
   try {
-    console.log(req.session.passport);
     const { user: email } = req.session.passport;
     const user = await User.findOne({email: email});
-    console.log('User', user);
     const connection = await Connection.create({user: user._id, ...req.body});
-
-    req.flash('success', 'Item created successfully');
-    res.redirect(`/connections/${connection.id}`);
+    res.status(200).json(connection);
   } catch (error) {
-    req.flash('danger', `There was an error creating this item: ${error}`);
-    req.session.formData = req.body;
-    res.redirect('/connections/new');
+    res.status(400).json({message: "There was an error creating the post", error});
   }
 };
 
@@ -99,22 +84,17 @@ exports.update = async (req, res) => {
     await Connection.validate(attributes);
     await Connection.findByIdAndUpdate(attributes.id, attributes);
 
-    req.flash('success', 'The item was updated successfully');
-    res.redirect(`/connections/${req.body.id}`);
+    res.status(200).json({message: "The post was updated successfully"});
   } catch (error) {
-    req.flash('danger', `There was an error updating this item: ${error}`);
-    res.redirect(`/connections/${req.body.id}/edit`);
+    res.status(400).json({message: "There was an error updating this post"});
   }
 };
 
 exports.delete = async (req, res) => {
   try {
-    console.log(req.body);
     await Connection.deleteOne({_id: req.body.id});
-    req.flash('success', 'The item was deleted successfully');
-    res.redirect(`/connections`);
+    res.status(200).json({message: "Yay."});
   } catch (error) {
-    req.flash('danger', `There was an error deleting this item: ${error}`);
-    res.redirect(`/connections`);
+    res.status(400).json({message: "There was an error deleting the post"});
   }
 };

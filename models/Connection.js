@@ -44,7 +44,10 @@ const ConnectionSchema = new mongoose.Schema({
     required: false
   }
 }, {
-  timestamps: true
+  timestamps: true,
+  toJSON: {
+    getters: true
+  }
 });
 
 ConnectionSchema.query.offerServices = function () {
