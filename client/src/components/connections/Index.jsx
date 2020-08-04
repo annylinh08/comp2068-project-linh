@@ -83,7 +83,7 @@ const Index = function ({user}) {
                         </p>
                     </div>
 
-                    {user && connection.user  ?  (
+                    {connection.user.id === user._id  ?  (
                         <div className="custom-footer card-footer">
                             <Link to={{
                             pathname: "/connections/edit",
