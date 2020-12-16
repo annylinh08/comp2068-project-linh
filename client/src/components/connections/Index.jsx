@@ -62,7 +62,7 @@ const Index = function ({user}) {
                         </div>
                             
                         <div className="info-love-index">
-                            {connection.user ? (
+                             (
                                 <Fragment>
                                     <div className="post-info">
                                         <small className="category">{connection.category}</small>
@@ -73,7 +73,7 @@ const Index = function ({user}) {
                                         <label className="love-button"><i className="fa fa-heart" id="button-heart"  onClick={() => Toggle(this)}></i></label>
                                     </div>) : null}
                                 </Fragment>
-                            ) : null}    
+                            )    
                         </div>
                     </div>
 
