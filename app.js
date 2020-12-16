@@ -98,5 +98,5 @@ app.get('*', (req, res) => {
 /*
   Step 8: Start the server
 */
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 4001;
 app.listen(port, () => console.log(`Listening on port ${port}`));
