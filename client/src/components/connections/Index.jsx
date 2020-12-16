@@ -52,13 +52,13 @@ const Index = function ({user}) {
                             {connection.title}
                             </h5>
 
-                            {connection.user ? (
+                             
                                 <Fragment>
                                     <small className="author">{connection.user.fullname}</small>
                                     <br></br>
                                     <small className="time">{connection.updatedAt}</small>
                                 </Fragment>
-                            ) : null}
+            
                         </div>
                             
                         <div className="info-love-index">
